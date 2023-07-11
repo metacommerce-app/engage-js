@@ -1,0 +1,41 @@
+{
+    "folders": [
+        {
+            "name": "root",
+            "path": ".",
+        }
+    ],
+    "settings": {
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "python.formatting.provider": "black",
+        "[javascript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "editor.rulers": [
+            132,
+            200
+        ],
+        "files.exclude": {},
+        "jest.autoRun": "off",
+        "jest.jestCommandLine": "npm test --",
+        "jest.disabledWorkspaceFolders": []
+    },
+    "extensions": {
+        "recommendations": [
+            "orta.vscode-jest",
+            "editorconfig.editorconfig",
+            "dbaeumer.vscode-eslint",
+            "esbenp.prettier-vscode",
+            "cab404.vscode-direnv"
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [],
+        "compounds": []
+    }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "@metacommerce-app/template-package",
+  "version": "0.0.1",
+  "description": "Template NodeJS package repository",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/types/index.d.ts",
+        "default": "./lib/esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/cjs/types/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
+  "types": "./lib/cjs/types/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "lint": "eslint . --ext .ts",
+    "test": "jest",
+    "watch": "tsc -w",
+    "semantic-release": "semantic-release",
+    "prepack": "npm run build"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metacommerce-app/template-package.git"
+  },
+  "author": "Sebastien Coutu <sebastien@metacommerce.app>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/metacommerce-app/template-package/issues"
+  },
+  "homepage": "https://github.com/metacommerce-app/template-package#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/types": "^17.4.4",
+    "@types/jest": "^27.5.2",
+    "@types/node": "10.17.27",
+    "@types/node-fetch": "^2.6.2",
+    "@types/prettier": "2.6.0",
+    "@types/source-map-support": "^0.5.6",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.14.50",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "jest": "^27.5.1",
+    "prettier": "2.7.1",
+    "semantic-release": "^20.1.1",
+    "ts-jest": "^27.1.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "pino": "^8.8.0"
+  }
+}

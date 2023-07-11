@@ -1,0 +1,13 @@
+# Ignore artifacts:
+build
+coverage
+
+.vscode/**
+
+*.js
+!jest.config.js
+!jest-dynamodb-config.js
+*.d.ts
+node_modules
+
+lib/**
