@@ -7,7 +7,7 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": [
-      "./configs/tsconfig.test.json"
+      "./tsconfig.json"
     ]
   },
   "plugins": [
@@ -17,6 +17,7 @@
   "ignorePatterns": [
     "lib/*",
     "jest.config.ts",
+    "*.test.ts",
     "commitlint.config.ts",
     "node_modules/*"
   ]

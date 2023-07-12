@@ -106,6 +106,7 @@ dist
 .dccache
 .DS_Store
 lib
+!src/lib
 *.tgz
 
 # direnv files

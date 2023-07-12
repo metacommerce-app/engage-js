@@ -1,7 +1,12 @@
 {
-  "name": "@metacommerce-app/template-package",
+  "name": "@metacommerce-app/engage-js",
   "version": "0.0.1",
-  "description": "Template NodeJS package repository",
+  "description": "Metacommerce Engage Javascript SDK",
+  "types": "./lib/cjs/types/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib/**/*"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -14,18 +19,13 @@
       }
     }
   },
-  "types": "./lib/cjs/types/index.d.ts",
-  "main": "./lib/cjs/index.js",
-  "files": [
-    "lib/**/*"
-  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
-    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "build:esm": "tsc -p ./tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./tsconfig.json",
     "lint": "eslint . --ext .ts",
-    "test": "jest",
+    "test": "jest --runInBand --detectOpenHandles",
     "watch": "tsc -w",
     "semantic-release": "semantic-release",
     "prepack": "npm run build"
@@ -40,14 +40,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/metacommerce-app/template-package.git"
+    "url": "git+https://github.com/metacommerce-app/engage-js.git"
   },
   "author": "Sebastien Coutu <sebastien@metacommerce.app>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/metacommerce-app/template-package/issues"
+    "url": "https://github.com/metacommerce-app/engage-js/issues"
   },
-  "homepage": "https://github.com/metacommerce-app/template-package#readme",
+  "homepage": "https://github.com/metacommerce-app/engage-js#readme",
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",

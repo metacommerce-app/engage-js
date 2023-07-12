@@ -6,6 +6,7 @@
         }
     ],
     "settings": {
+        "window.title": "${dirty}engage-js${separator}${rootName}${separator}${activeEditorShort}",
         "editor.formatOnSave": true,
         "editor.formatOnSaveMode": "file",
         "python.formatting.provider": "black",
@@ -20,6 +21,8 @@
             200
         ],
         "files.exclude": {},
+        "prettier.prettierPath": "node_modules/prettier",
+        "typescript.tsdk": "node_modules/typescript/lib",
         "jest.autoRun": "off",
         "jest.jestCommandLine": "npm test --",
         "jest.disabledWorkspaceFolders": []

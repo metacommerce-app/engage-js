@@ -4,21 +4,17 @@ import { defaults } from 'jest-config';
 
 const config: Config.InitialOptions = {
   ...defaults,
-  name: 'metacommerce-data',
   preset: 'ts-jest',
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/configs/tsconfig.test.json',
-    },
-  },
   roots: ['<rootDir>/src'],
-  setupFiles: ['dotenv/config'],
+  globalSetup: '<rootDir>/src/lib/tests/globalSetup.ts',
+  globalTeardown: '<rootDir>/src/lib/tests/globalTeardown.ts',
   testEnvironment: 'node',
   testMatch: ['**/*.test.ts'],
   testTimeout: 15000,
   transform: {
-    ...tsjPreset.transform,
+    ...(tsjPreset.transform as any),
   },
+  modulePaths: ['<rootDir>/node_modules/', '<rootDir>/src/'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   verbose: true,
 };
