@@ -20,4 +20,7 @@ npm install @metacommerce-app/engage
 import Engage from '@metacommerce-app/engage';
 
 const engageSdk = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engageSdk.initialize(apiKey);
 ```
