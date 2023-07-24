@@ -50,7 +50,7 @@ describe('User Event', () => {
     expect(obj['url'].pathname).toBe(`/${customUri}`);
   });
 
-  it('Should send the proper request', async () => {
+  it('Should send the proper login request', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
     const apiKey = 'abcd-efgh-1234-5678';
@@ -78,6 +78,39 @@ describe('User Event', () => {
         body: JSON.stringify({
           ...payload,
           type: 'engage.events.user.login',
+        }),
+      }),
+    );
+  });
+
+  it('Should send the proper logout request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const client = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      userId: '1234',
+      foo: 'bar',
+    };
+
+    await client.logout(payload);
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          ...payload,
+          type: 'engage.events.user.logout',
         }),
       }),
     );

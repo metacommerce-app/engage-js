@@ -39,4 +39,27 @@ export class UserEvent implements IEngageUserComponent {
       throw e;
     }
   }
+
+  async logout(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+    logger.debug(`Will send request to [ ${this.url} ]`);
+    try {
+      await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+        },
+        body: JSON.stringify({
+          ...data,
+          type: 'engage.events.user.logout',
+          userId: data.userId,
+          walletAddress: data.wallet,
+        }),
+      });
+    } catch (e: unknown) {
+      logger.error(`There was an error sending request to [ ${this.url} ]`);
+      throw e;
+    }
+  }
 }
