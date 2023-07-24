@@ -19,7 +19,6 @@
     "jest.config.ts",
     "*.test.ts",
     "commitlint.config.ts",
-    "node_modules/*",
-    "playground/*"
+    "node_modules/*"
   ]
 }

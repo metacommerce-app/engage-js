@@ -28,8 +28,7 @@
     "test": "jest --runInBand --detectOpenHandles",
     "watch": "tsc -w",
     "semantic-release": "semantic-release",
-    "prepack": "npm run build",
-    "playground": "ts-node ./src/lib/playground/playground.ts"
+    "prepack": "npm run build"
   },
   "release": {
     "branches": [
