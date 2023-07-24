@@ -17,7 +17,7 @@ npm install @metacommerce-app/engage
 ## Getting started
 
 ```ts
-import Engage from '@metacommerce-app/engage';
+import Engage from '@metacommerce-app/engage-js';
 
 const engageSdk = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
@@ -28,7 +28,7 @@ engageSdk.initialize({apiKey});
 ### Sending a custom event
 
 ```ts
-import Engage from '@metacommerce-app/engage';
+import Engage from '@metacommerce-app/engage-js';
 
 const engage = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
@@ -40,4 +40,24 @@ await engage.events.send({
     foo: "bar"
     hello: "world"
 })
+```
+
+### Sending a login event
+
+```ts
+import Engage from '@metacommerce-app/engage-js';
+
+const engage = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engage.initialize({apiKey})
+
+await engage.events.user.login({
+    userId: "1234", // required
+    wallet: "0x1234", // optional
+    foo: "bar"
+})
+```
+
+
 

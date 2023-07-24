@@ -9,6 +9,10 @@ import { MissingApiKeyMessage } from '../lib/errors';
 );
 
 describe('Engage', () => {
+  beforeEach(() => {
+    (global as any).fetch.mockClear();
+  });
+
   it('Should initialize the API key with the default URL', () => {
     const obj = new Engage();
     expect(obj).toBeInstanceOf(Engage);
@@ -67,6 +71,23 @@ describe('Engage', () => {
     await client.events.send({
       type: 'test',
       iHaveProps: 'yes',
+    });
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).not.toThrow();
+  });
+
+  it('should send a login event', async () => {
+    const client = new Engage();
+
+    client.initialize({
+      apiKey: 'abcd-efgh-1234-5678',
+    });
+
+    await client.events.user.login({
+      userId: '1234',
+      wallet: '0x1234',
+      foo: 'bar',
     });
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
