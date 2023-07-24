@@ -156,4 +156,22 @@ describe('User Event', () => {
 
     expect(objCall).rejects.toThrow('Missing userId');
   });
+
+  it('Should throw if missing userId in logout', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      NOT_userId: '1234',
+      fail: 'true',
+    };
+
+    const objCall = async () => {
+      await obj.logout(payload as any); // evil dev
+    };
+
+    expect(objCall).rejects.toThrow('Missing userId');
+  });
 });

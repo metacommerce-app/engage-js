@@ -43,6 +43,10 @@ export class UserEvent implements IEngageUserComponent {
   async logout(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
+      if (!data.userId) {
+        throw new Error('Missing userId');
+      }
+
       await fetch(this.url, {
         method: 'POST',
         headers: {
