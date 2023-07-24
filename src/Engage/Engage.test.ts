@@ -1,6 +1,13 @@
 import { Engage } from './Engage';
 import { MissingApiKeyMessage } from '../lib/errors';
 
+(global as any).fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({}),
+  }),
+);
+
 describe('Engage', () => {
   it('Should initialize the API key with the default URL', () => {
     const obj = new Engage();
@@ -38,5 +45,31 @@ describe('Engage', () => {
 
     expect(obj['url']).toBeDefined();
     expect(obj['url']).toBe(newUrl);
+  });
+
+  it('Should initialize and provide an events subcomponent', () => {
+    const obj = new Engage();
+    expect(obj).toBeInstanceOf(Engage);
+    const apiKey = 'abcd-efgh-1234-5678';
+    obj.initialize({ apiKey });
+
+    expect(obj.events).toBeDefined();
+    expect(obj.events).toHaveProperty('send');
+  });
+
+  it('should send a custom event', async () => {
+    const client = new Engage();
+
+    client.initialize({
+      apiKey: 'abcd-efgh-1234-5678',
+    });
+
+    await client.events.send({
+      type: 'test',
+      iHaveProps: 'yes',
+    });
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).not.toThrow();
   });
 });
