@@ -39,4 +39,14 @@ describe('Engage', () => {
     expect(obj['url']).toBeDefined();
     expect(obj['url']).toBe(newUrl);
   });
+
+  it('Should initialize and provide an events subcomponent', () => {
+    const obj = new Engage();
+    expect(obj).toBeInstanceOf(Engage);
+    const apiKey = 'abcd-efgh-1234-5678';
+    obj.initialize({ apiKey });
+
+    expect(obj.events).toBeDefined();
+    expect(obj.events).toHaveProperty('send');
+  });
 });
