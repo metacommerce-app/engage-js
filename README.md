@@ -59,5 +59,22 @@ await engage.events.user.login({
 })
 ```
 
+### Sending a logout event
+
+```ts
+import Engage from '@metacommerce-app/engage-js';
+
+const engage = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engage.initialize({apiKey})
+
+await engage.events.user.logout({
+    userId: "1234", // required
+    wallet: "0x1234", // optional
+    foo: "bar"
+})
+```
+
 
 

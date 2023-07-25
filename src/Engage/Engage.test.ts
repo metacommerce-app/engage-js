@@ -93,4 +93,21 @@ describe('Engage', () => {
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).not.toThrow();
   });
+
+  it('should send a logout event', async () => {
+    const client = new Engage();
+
+    client.initialize({
+      apiKey: 'abcd-efgh-1234-5678',
+    });
+
+    await client.events.user.logout({
+      userId: '1234',
+      wallet: '0x1234',
+      foo: 'bar',
+    });
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).not.toThrow();
+  });
 });
