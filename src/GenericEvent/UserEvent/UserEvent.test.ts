@@ -116,6 +116,39 @@ describe('User Event', () => {
     );
   });
 
+  it('Should send the proper signingUp request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const client = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      userId: '1234',
+      foo: 'bar',
+    };
+
+    await client.signingUp(payload);
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          ...payload,
+          type: 'engage.events.user.signingUp',
+        }),
+      }),
+    );
+  });
+
   it('Should throw if send has an issue', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
