@@ -57,8 +57,8 @@ describe('User Event', () => {
     const obj = new UserEvent(baseUrl, apiKey);
 
     const payload = {
-      userId: '1234',
       foo: 'bar',
+      userId: '1234',
     };
 
     await obj.login(payload);
@@ -89,10 +89,7 @@ describe('User Event', () => {
     const apiKey = 'abcd-efgh-1234-5678';
     const client = new UserEvent(baseUrl, apiKey);
 
-    const payload = {
-      userId: '1234',
-      foo: 'bar',
-    };
+    const payload = { foo: 'bar', userId: '1234' };
 
     await client.logout(payload);
 
@@ -111,6 +108,39 @@ describe('User Event', () => {
         body: JSON.stringify({
           ...payload,
           type: 'engage.events.user.logout',
+        }),
+      }),
+    );
+  });
+
+  it('Should send the proper signingUp request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const client = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      foo: 'bar',
+      userId: '1234', // optional
+    };
+
+    await client.signingUp(payload);
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          ...payload,
+          type: 'engage.events.user.signingUp',
         }),
       }),
     );
@@ -173,5 +203,21 @@ describe('User Event', () => {
     };
 
     expect(objCall).rejects.toThrow('Missing userId');
+  });
+
+  it('Should not throw if missing userId in signingUp', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      NOT_userId: '1234',
+      fail: 'true',
+    };
+
+    await obj.signingUp(payload as any); // evil dev
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
   });
 });

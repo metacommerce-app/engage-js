@@ -20,6 +20,8 @@ export class UserEvent implements IEngageUserComponent {
         throw new Error('Missing userId');
       }
 
+      const { wallet, userId, ...input } = data;
+
       await fetch(this.url, {
         method: 'POST',
         headers: {
@@ -28,10 +30,10 @@ export class UserEvent implements IEngageUserComponent {
           'X-API-KEY': this.apiKey,
         },
         body: JSON.stringify({
-          ...data,
+          ...input,
+          userId,
+          walletAddress: wallet,
           type: 'engage.events.user.login',
-          userId: data.userId,
-          walletAddress: data.wallet,
         }),
       });
     } catch (e: unknown) {
@@ -47,6 +49,8 @@ export class UserEvent implements IEngageUserComponent {
         throw new Error('Missing userId');
       }
 
+      const { wallet, userId, ...input } = data;
+
       await fetch(this.url, {
         method: 'POST',
         headers: {
@@ -55,10 +59,35 @@ export class UserEvent implements IEngageUserComponent {
           'X-API-KEY': this.apiKey,
         },
         body: JSON.stringify({
-          ...data,
+          ...input,
+          userId,
+          walletAddress: wallet,
           type: 'engage.events.user.logout',
-          userId: data.userId,
-          walletAddress: data.wallet,
+        }),
+      });
+    } catch (e: unknown) {
+      logger.error(`There was an error sending request to [ ${this.url} ]`);
+      throw e;
+    }
+  }
+
+  async signingUp(data: { userId?: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+    logger.debug(`Will send request to [ ${this.url} ]`);
+    try {
+      const { wallet, userId, ...input } = data;
+
+      await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+        },
+        body: JSON.stringify({
+          ...input,
+          userId,
+          walletAddress: wallet,
+          type: 'engage.events.user.signingUp',
         }),
       });
     } catch (e: unknown) {
