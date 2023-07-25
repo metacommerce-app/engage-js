@@ -1,8 +1,9 @@
 import { IEngageSubComponent } from '../Engage';
 import { Routes } from '../lib/routes';
 import { logger } from '../lib/logging';
-import { IEngageUserComponent } from 'src/Engage/EngageSubComponent';
+import { IEngageUserComponent, IEngageWalletComponent } from 'src/Engage/EngageSubComponent';
 import { UserEvent } from './UserEvent/UserEvent';
+import { WalletEvent } from './WalletEvent/WalletEvent';
 
 export class GenericEvent implements IEngageSubComponent {
   private uri: string;
@@ -10,6 +11,7 @@ export class GenericEvent implements IEngageSubComponent {
   private apiKey: string;
 
   user!: IEngageUserComponent;
+  wallet!: IEngageWalletComponent;
 
   constructor(host: string, apiKey: string, uri?: string) {
     this.apiKey = apiKey;
@@ -17,6 +19,7 @@ export class GenericEvent implements IEngageSubComponent {
     this.url = new URL(`${host}/${this.uri}`);
 
     this.user = new UserEvent(host, apiKey, uri);
+    this.wallet = new WalletEvent(host, apiKey, uri);
   }
 
   async send(data: { [param: string]: string; type: string }): Promise<void> {
