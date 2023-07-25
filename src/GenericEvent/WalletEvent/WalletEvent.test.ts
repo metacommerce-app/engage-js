@@ -126,8 +126,8 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           foo: 'bar',
-          type: 'engage.events.wallet.transfer',
           walletAddress: '0x1234', // from
+          type: 'engage.events.wallet.transfer',
         }),
       }),
     );
@@ -142,8 +142,8 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           foo: 'bar',
-          type: 'engage.events.wallet.received',
           walletAddress: '0x5678', // to
+          type: 'engage.events.wallet.received',
         }),
       }),
     );
@@ -222,7 +222,10 @@ describe('User Event', () => {
       fail: 'yes of course this will fail',
     };
 
-    (global as any).fetch.mockImplementation(async () => {
+    (global as any).fetch.mockImplementationOnce(async () => {
+      throw new Error('Failed to send request');
+    });
+    (global as any).fetch.mockImplementationOnce(async () => {
       throw new Error('Failed to send request');
     });
 
@@ -234,4 +237,76 @@ describe('User Event', () => {
 
     expect((global as any).fetch).toHaveBeenCalledTimes(2);
   });
+});
+
+it('Should send the proper balance request', async () => {
+  (global as any).fetch.mockClear();
+  const host = 'localhost.localdomain';
+  const baseUrl = `https://${host}`;
+  const apiKey = 'abcd-efgh-1234-5678';
+  const obj = new WalletEvent(baseUrl, apiKey);
+
+  await obj.balance({
+    wallet: '0x1234',
+    balance: BigInt(100),
+    foo: 'bar',
+  });
+
+  const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+  expect((global as any).fetch).toHaveBeenCalledTimes(1);
+  expect((global as any).fetch).toHaveBeenCalledWith(
+    url,
+    expect.objectContaining({
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-API-KEY': apiKey,
+      },
+      body: JSON.stringify({
+        foo: 'bar',
+        balance: BigInt(100).toString(),
+        walletAddress: '0x1234',
+        type: 'engage.events.wallet.balance',
+      }),
+    }),
+  );
+});
+
+it('Should throw if missing wallet in balance', async () => {
+  const host = 'localhost.localdomain';
+  const baseUrl = `https://${host}`;
+  const apiKey = 'abcd-efgh-1234-5678';
+  const obj = new WalletEvent(baseUrl, apiKey);
+
+  const payload = {
+    NOT_wallet: 'I am not a wallet',
+    fail: 'yes of course this will fail',
+  };
+
+  const objCall = async () => {
+    await obj.balance(payload as any); // evil dev
+  };
+
+  expect(objCall).rejects.toThrow('Missing wallet');
+});
+
+it('Should throw if missing balance in balance', async () => {
+  const host = 'localhost.localdomain';
+  const baseUrl = `https://${host}`;
+  const apiKey = 'abcd-efgh-1234-5678';
+  const obj = new WalletEvent(baseUrl, apiKey);
+
+  const payload = {
+    wallet: 'I am a wallet',
+    NOT_balance: 'I am not a balance',
+    fail: 'yes of course this will fail',
+  };
+
+  const objCall = async () => {
+    await obj.balance(payload as any); // evil dev
+  };
+
+  expect(objCall).rejects.toThrow('Missing balance');
 });
