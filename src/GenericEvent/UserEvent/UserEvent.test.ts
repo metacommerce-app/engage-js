@@ -146,6 +146,36 @@ describe('User Event', () => {
     );
   });
 
+  it('Should send the proper signedUp request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const client = new UserEvent(baseUrl, apiKey);
+
+    const payload = { foo: 'bar', userId: '1234' };
+
+    await client.signedUp(payload);
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          ...payload,
+          type: 'engage.events.user.signedUp',
+        }),
+      }),
+    );
+  });
+
   it('Should throw if send has an issue', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
@@ -219,5 +249,23 @@ describe('User Event', () => {
     await obj.signingUp(payload as any); // evil dev
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should throw if missing userId in signedUp', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      NOT_userId: '1234',
+      fail: 'true',
+    };
+
+    const objCall = async () => {
+      await obj.signedUp(payload as any); // evil dev
+    };
+
+    expect(objCall).rejects.toThrow('Missing userId');
   });
 });

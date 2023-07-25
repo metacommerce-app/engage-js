@@ -95,4 +95,33 @@ export class UserEvent implements IEngageUserComponent {
       throw e;
     }
   }
+
+  async signedUp(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+    logger.debug(`Will send request to [ ${this.url} ]`);
+    try {
+      if (!data.userId) {
+        throw new Error('Missing userId');
+      }
+
+      const { wallet, userId, ...input } = data;
+
+      await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+        },
+        body: JSON.stringify({
+          ...input,
+          userId,
+          walletAddress: wallet,
+          type: 'engage.events.user.signedUp',
+        }),
+      });
+    } catch (e: unknown) {
+      logger.error(`There was an error sending request to [ ${this.url} ]`);
+      throw e;
+    }
+  }
 }
