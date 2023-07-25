@@ -65,9 +65,9 @@ export class WalletEvent implements IEngageWalletComponent {
         },
         body: JSON.stringify({
           ...input,
-          type: 'engage.events.wallet.transfer',
           walletAddress: fromWallet,
           userId: userId,
+          type: 'engage.events.wallet.transfer',
         }),
       });
 
@@ -80,9 +80,9 @@ export class WalletEvent implements IEngageWalletComponent {
         },
         body: JSON.stringify({
           ...input,
-          type: 'engage.events.wallet.received',
           walletAddress: toWallet,
           userId: userId,
+          type: 'engage.events.wallet.received',
         }),
       });
     } catch (e: unknown) {
@@ -91,6 +91,40 @@ export class WalletEvent implements IEngageWalletComponent {
       }
       logger.error(`There was an error sending request to [ ${this.url} ], retrying...`);
       await this.transfer(data, numberOfRetries - 1);
+    }
+  }
+
+  async balance(data: { wallet: string; balance: bigint; userId?: string; [params: string]: unknown }): Promise<void> {
+    logger.debug(`Will send request to [ ${this.url} ]`);
+    try {
+      if (!data.wallet) {
+        throw new Error('Missing wallet');
+      }
+
+      if (!data.balance) {
+        throw new Error('Missing balance');
+      }
+
+      const { wallet, userId, balance, ...input } = data;
+
+      await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+        },
+        body: JSON.stringify({
+          ...input,
+          balance: balance.toString(),
+          walletAddress: wallet,
+          userId: userId,
+          type: 'engage.events.wallet.balance',
+        }),
+      });
+    } catch (e: unknown) {
+      logger.error(`There was an error sending request to [ ${this.url} ]`);
+      throw e;
     }
   }
 }

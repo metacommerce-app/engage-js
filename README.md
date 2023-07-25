@@ -151,3 +151,20 @@ await engage.events.wallet.transfer({
   foo: 'bar',
 });
 ```
+### Sending a balance event
+
+```ts
+import Engage from '@metacommerce-app/engage-js';
+
+const engage = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engage.initialize({ apiKey });
+
+await engage.events.wallet.balance({
+  wallet: '0x1234', // required
+  balance: BigInt(100), // required
+  userId: '1234', // optional
+  foo: 'bar',
+});
+```
