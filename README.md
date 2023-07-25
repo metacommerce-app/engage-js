@@ -24,6 +24,7 @@ const apiKey = 'abcd-efgh-1234-5678';
 
 engageSdk.initialize({apiKey});
 ```
+## Custom events
 
 ### Sending a custom event
 
@@ -41,6 +42,8 @@ await engage.events.send({
     hello: "world"
 })
 ```
+
+## User events
 
 ### Sending a login event
 
@@ -109,6 +112,43 @@ await engage.events.user.signedUp({
     foo: "bar"
 })
 ```
+
+### Sending a signedUp event
+
+```ts
+import Engage from '@metacommerce-app/engage-js';
+
+const engage = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engage.initialize({apiKey})
+
+await engage.events.user.signedUp({
+    userId: "1234", // required
+    wallet: "0x1234", // optional
+    foo: "bar"
+})
+```
+
+## Wallet events
+
+### Sending a mint event
+
+```ts
+import Engage from '@metacommerce-app/engage-js';
+
+const engage = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engage.initialize({apiKey})
+
+await engage.events.wallet.mint({
+    wallet: "0x1234", // required
+    userId: "1234", // optional
+    foo: "bar"
+})
+```
+
 
 
 
