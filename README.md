@@ -22,8 +22,10 @@ import Engage from '@metacommerce-app/engage-js';
 const engageSdk = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
 
-engageSdk.initialize({apiKey});
+engageSdk.initialize({ apiKey });
 ```
+## Custom events
+
 ## Custom events
 
 ### Sending a custom event
@@ -53,13 +55,13 @@ import Engage from '@metacommerce-app/engage-js';
 const engage = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
 
-engage.initialize({apiKey})
+engage.initialize({ apiKey });
 
 await engage.events.user.login({
-    userId: "1234", // required
-    wallet: "0x1234", // optional
-    foo: "bar"
-})
+  userId: '1234', // required
+  wallet: '0x1234', // optional
+  foo: 'bar',
+});
 ```
 
 ### Sending a logout event
@@ -70,13 +72,13 @@ import Engage from '@metacommerce-app/engage-js';
 const engage = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
 
-engage.initialize({apiKey})
+engage.initialize({ apiKey });
 
 await engage.events.user.logout({
-    userId: "1234", // required
-    wallet: "0x1234", // optional
-    foo: "bar"
-})
+  userId: '1234', // required
+  wallet: '0x1234', // optional
+  foo: 'bar',
+});
 ```
 
 ### Sending a signingUp event
@@ -87,13 +89,13 @@ import Engage from '@metacommerce-app/engage-js';
 const engage = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
 
-engage.initialize({apiKey})
+engage.initialize({ apiKey });
 
 await engage.events.user.signingUp({
-    userId: "1234", // optional
-    wallet: "0x1234", // optional
-    foo: "bar"
-})
+  userId: '1234', // optional
+  wallet: '0x1234', // optional
+  foo: 'bar',
+});
 ```
 
 ### Sending a signedUp event
@@ -104,30 +106,13 @@ import Engage from '@metacommerce-app/engage-js';
 const engage = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
 
-engage.initialize({apiKey})
+engage.initialize({ apiKey });
 
 await engage.events.user.signedUp({
-    userId: "1234", // required
-    wallet: "0x1234", // optional
-    foo: "bar"
-})
-```
-
-### Sending a signedUp event
-
-```ts
-import Engage from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({apiKey})
-
-await engage.events.user.signedUp({
-    userId: "1234", // required
-    wallet: "0x1234", // optional
-    foo: "bar"
-})
+  userId: '1234', // required
+  wallet: '0x1234', // optional
+  foo: 'bar',
+});
 ```
 
 ## Wallet events
@@ -140,15 +125,29 @@ import Engage from '@metacommerce-app/engage-js';
 const engage = new Engage();
 const apiKey = 'abcd-efgh-1234-5678';
 
-engage.initialize({apiKey})
+engage.initialize({ apiKey });
 
 await engage.events.wallet.mint({
-    wallet: "0x1234", // required
-    userId: "1234", // optional
-    foo: "bar"
-})
+  wallet: '0x1234', // required
+  userId: '1234', // optional
+  foo: 'bar',
+});
 ```
 
+### Sending a transfer event
 
+```ts
+import Engage from '@metacommerce-app/engage-js';
 
+const engage = new Engage();
+const apiKey = 'abcd-efgh-1234-5678';
 
+engage.initialize({ apiKey });
+
+await engage.events.wallet.transfer({
+  fromWallet: '0x1234', // required
+  toWallet: '0x5678', // required
+  userId: '1234', // optional
+  foo: 'bar',
+});
+```

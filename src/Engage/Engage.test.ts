@@ -160,4 +160,21 @@ describe('Engage', () => {
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).not.toThrow();
   });
+
+  it('should send a transfer event', async () => {
+    const client = new Engage();
+
+    client.initialize({
+      apiKey: 'abcd-efgh-1234-5678',
+    });
+
+    await client.events.wallet.transfer({
+      fromWallet: '0x1234',
+      toWallet: '0x5678',
+      foo: 'bar',
+    });
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(2);
+    expect((global as any).fetch).not.toThrow();
+  });
 });
