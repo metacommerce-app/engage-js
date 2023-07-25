@@ -57,8 +57,8 @@ describe('User Event', () => {
     const obj = new UserEvent(baseUrl, apiKey);
 
     const payload = {
-      userId: '1234',
       foo: 'bar',
+      userId: '1234',
     };
 
     await obj.login(payload);
@@ -89,10 +89,7 @@ describe('User Event', () => {
     const apiKey = 'abcd-efgh-1234-5678';
     const client = new UserEvent(baseUrl, apiKey);
 
-    const payload = {
-      userId: '1234',
-      foo: 'bar',
-    };
+    const payload = { foo: 'bar', userId: '1234' };
 
     await client.logout(payload);
 
@@ -123,8 +120,8 @@ describe('User Event', () => {
     const client = new UserEvent(baseUrl, apiKey);
 
     const payload = {
-      userId: '1234',
       foo: 'bar',
+      userId: '1234', // optional
     };
 
     await client.signingUp(payload);
@@ -208,7 +205,7 @@ describe('User Event', () => {
     expect(objCall).rejects.toThrow('Missing userId');
   });
 
-  it('Should throw if missing userId in signingUp', async () => {
+  it('Should not throw if missing userId in signingUp', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
     const apiKey = 'abcd-efgh-1234-5678';
@@ -219,10 +216,8 @@ describe('User Event', () => {
       fail: 'true',
     };
 
-    const objCall = async () => {
-      await obj.signingUp(payload as any); // evil dev
-    };
+    await obj.signingUp(payload as any); // evil dev
 
-    expect(objCall).rejects.toThrow('Missing userId');
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
   });
 });

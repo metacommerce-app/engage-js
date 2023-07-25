@@ -87,7 +87,7 @@ const apiKey = 'abcd-efgh-1234-5678';
 engage.initialize({apiKey})
 
 await engage.events.user.signingUp({
-    userId: "1234", // required
+    userId: "1234", // optional
     wallet: "0x1234", // optional
     foo: "bar"
 })

@@ -20,6 +20,8 @@ export class UserEvent implements IEngageUserComponent {
         throw new Error('Missing userId');
       }
 
+      const { wallet, userId, ...input } = data;
+
       await fetch(this.url, {
         method: 'POST',
         headers: {
@@ -28,10 +30,10 @@ export class UserEvent implements IEngageUserComponent {
           'X-API-KEY': this.apiKey,
         },
         body: JSON.stringify({
-          ...data,
+          ...input,
+          userId,
+          walletAddress: wallet,
           type: 'engage.events.user.login',
-          userId: data.userId,
-          walletAddress: data.wallet,
         }),
       });
     } catch (e: unknown) {
@@ -47,6 +49,8 @@ export class UserEvent implements IEngageUserComponent {
         throw new Error('Missing userId');
       }
 
+      const { wallet, userId, ...input } = data;
+
       await fetch(this.url, {
         method: 'POST',
         headers: {
@@ -55,10 +59,10 @@ export class UserEvent implements IEngageUserComponent {
           'X-API-KEY': this.apiKey,
         },
         body: JSON.stringify({
-          ...data,
+          ...input,
+          userId,
+          walletAddress: wallet,
           type: 'engage.events.user.logout',
-          userId: data.userId,
-          walletAddress: data.wallet,
         }),
       });
     } catch (e: unknown) {
@@ -67,12 +71,10 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async signingUp(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signingUp(data: { userId?: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
-      if (!data.userId) {
-        throw new Error('Missing userId');
-      }
+      const { wallet, userId, ...input } = data;
 
       await fetch(this.url, {
         method: 'POST',
@@ -82,10 +84,10 @@ export class UserEvent implements IEngageUserComponent {
           'X-API-KEY': this.apiKey,
         },
         body: JSON.stringify({
-          ...data,
+          ...input,
+          userId,
+          walletAddress: wallet,
           type: 'engage.events.user.signingUp',
-          userId: data.userId,
-          walletAddress: data.wallet,
         }),
       });
     } catch (e: unknown) {
