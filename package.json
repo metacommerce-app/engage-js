@@ -49,7 +49,7 @@
   },
   "homepage": "https://github.com/metacommerce-app/engage-js#readme",
   "devDependencies": {
-    "@commitlint/cli": "17.7.0",
+    "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
     "@commitlint/types": "17.4.4",
     "@types/jest": "29.5.3",
