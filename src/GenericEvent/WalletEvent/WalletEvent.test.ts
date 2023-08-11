@@ -1,5 +1,6 @@
 import { WalletEvent } from './WalletEvent';
 import { Routes } from '../../lib/routes';
+import { WalletEvents } from './types';
 
 (global as any).fetch = jest.fn(() =>
   Promise.resolve({
@@ -75,11 +76,114 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           foo: 'bar',
-          type: 'engage.events.wallet.mint',
+          type: WalletEvents.Mint,
           walletAddress: '0x1234',
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
+  });
+
+  it('Should send the proper activity request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new WalletEvent(baseUrl, apiKey);
+
+    await obj.activity({
+      wallet: '0x1234',
+      foo: 'bar',
+    });
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          foo: 'bar',
+          type: WalletEvents.Activity,
+          walletAddress: '0x1234',
+          engage_inbound_source: 'sdk',
+        }),
+      }),
+    );
+  });
+
+  it('Should throw if missing wallet in activity', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new WalletEvent(baseUrl, apiKey);
+
+    const payload = {
+      NOT_wallet: 'I am not a wallet',
+      fail: 'yes of course this will fail',
+    };
+
+    const objCall = async () => {
+      await obj.activity(payload as any); // evil dev
+    };
+
+    await expect(objCall).rejects.toThrow('Missing wallet');
+  });
+
+  it('Should send the proper transaction request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new WalletEvent(baseUrl, apiKey);
+
+    await obj.transaction({
+      wallet: '0x1234',
+      foo: 'bar',
+    });
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          foo: 'bar',
+          type: WalletEvents.Transaction,
+          walletAddress: '0x1234',
+          engage_inbound_source: 'sdk',
+        }),
+      }),
+    );
+  });
+
+  it('Should throw if missing wallet in transaction', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new WalletEvent(baseUrl, apiKey);
+
+    const payload = {
+      NOT_wallet: 'I am not a wallet',
+      fail: 'yes of course this will fail',
+    };
+
+    const objCall = async () => {
+      await obj.transaction(payload as any); // evil dev
+    };
+
+    await expect(objCall).rejects.toThrow('Missing wallet');
   });
 
   it('Should throw if missing wallet in mint', async () => {
@@ -97,7 +201,7 @@ describe('User Event', () => {
       await obj.mint(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing wallet');
+    await expect(objCall).rejects.toThrow('Missing wallet');
   });
 
   it('Should send the proper transfer request', async () => {
@@ -127,7 +231,8 @@ describe('User Event', () => {
         body: JSON.stringify({
           foo: 'bar',
           walletAddress: '0x1234', // from
-          type: 'engage.events.wallet.transfer',
+          type: WalletEvents.Transfer,
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
@@ -143,7 +248,8 @@ describe('User Event', () => {
         body: JSON.stringify({
           foo: 'bar',
           walletAddress: '0x5678', // to
-          type: 'engage.events.wallet.received',
+          type: WalletEvents.Received,
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
@@ -164,7 +270,7 @@ describe('User Event', () => {
       await obj.transfer(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing fromWallet');
+    await expect(objCall).rejects.toThrow('Missing fromWallet');
   });
 
   it('Should throw if missing toWallet in transfer', async () => {
@@ -182,7 +288,7 @@ describe('User Event', () => {
       await obj.transfer(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing toWallet');
+    await expect(objCall).rejects.toThrow('Missing toWallet');
   });
 
   it('Should retry once if transfer fails and then succeed', async () => {
@@ -268,7 +374,8 @@ it('Should send the proper balance request', async () => {
         foo: 'bar',
         balance: BigInt(100).toString(),
         walletAddress: '0x1234',
-        type: 'engage.events.wallet.balance',
+        type: WalletEvents.Balance,
+        engage_inbound_source: 'sdk',
       }),
     }),
   );
@@ -289,7 +396,7 @@ it('Should throw if missing wallet in balance', async () => {
     await obj.balance(payload as any); // evil dev
   };
 
-  expect(objCall).rejects.toThrow('Missing wallet');
+  await expect(objCall).rejects.toThrow('Missing wallet');
 });
 
 it('Should throw if missing balance in balance', async () => {
@@ -308,5 +415,5 @@ it('Should throw if missing balance in balance', async () => {
     await obj.balance(payload as any); // evil dev
   };
 
-  expect(objCall).rejects.toThrow('Missing balance');
+  await expect(objCall).rejects.toThrow('Missing balance');
 });

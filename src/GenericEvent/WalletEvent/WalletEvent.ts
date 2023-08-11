@@ -74,6 +74,36 @@ export class WalletEvent implements IEngageWalletComponent {
     }
   }
 
+  async transaction(data: { wallet: string; userId?: string; [params: string]: unknown }): Promise<void> {
+    logger.debug(`Will send request to [ ${this.url} ]`);
+    try {
+      if (!data.wallet) {
+        throw new Error('Missing wallet');
+      }
+
+      const { wallet, userId, ...input } = data;
+
+      await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+        },
+        body: JSON.stringify({
+          ...input,
+          type: WalletEvents.Transaction,
+          walletAddress: wallet,
+          userId: userId,
+          engage_inbound_source: 'sdk',
+        }),
+      });
+    } catch (e: unknown) {
+      logger.error(`There was an error sending request to [ ${this.url} ]`);
+      throw e;
+    }
+  }
+
   async transfer(data: { fromWallet: string; toWallet: string; userId?: string; [params: string]: unknown }, numberOfRetries = 1): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ] with ${numberOfRetries} retries left`);
 

@@ -5,5 +5,7 @@ export interface IEngageWalletComponent {
 
   transfer(data: { fromWallet: string; toWallet: string; userId?: string; [params: string]: unknown }): Promise<void>;
 
+  transaction(data: { wallet: string; userId?: string; [params: string]: unknown }): Promise<void>;
+
   balance(data: { wallet: string; balance: bigint; userId?: string; [params: string]: unknown }): Promise<void>;
 }
