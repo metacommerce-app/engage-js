@@ -1,11 +1,12 @@
-import { IEngageUserComponent } from '../../Engage/EngageSubComponent';
 import { logger } from '../../lib/logging';
 import { Routes } from '../../lib/routes';
+import { IEngageUserComponent } from './IEngageUserComponent';
+import { UserEvents } from './types';
 
 export class UserEvent implements IEngageUserComponent {
-  private uri: string;
-  private url: URL;
-  private apiKey: string;
+  private readonly uri: string;
+  private readonly url: URL;
+  private readonly apiKey: string;
 
   constructor(host: string, apiKey: string, uri?: string) {
     this.apiKey = apiKey;
@@ -13,7 +14,7 @@ export class UserEvent implements IEngageUserComponent {
     this.url = new URL(`${host}/${this.uri}`);
   }
 
-  async login(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signIn(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -33,7 +34,8 @@ export class UserEvent implements IEngageUserComponent {
           ...input,
           userId,
           walletAddress: wallet,
-          type: 'engage.events.user.login',
+          type: UserEvents.SignIn,
+          engage_inbound_source: 'sdk',
         }),
       });
     } catch (e: unknown) {
@@ -42,7 +44,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async logout(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signOut(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -62,7 +64,8 @@ export class UserEvent implements IEngageUserComponent {
           ...input,
           userId,
           walletAddress: wallet,
-          type: 'engage.events.user.logout',
+          type: UserEvents.SignOut,
+          engage_inbound_source: 'sdk',
         }),
       });
     } catch (e: unknown) {
@@ -87,7 +90,8 @@ export class UserEvent implements IEngageUserComponent {
           ...input,
           userId,
           walletAddress: wallet,
-          type: 'engage.events.user.signingUp',
+          type: UserEvents.SigningUp,
+          engage_inbound_source: 'sdk',
         }),
       });
     } catch (e: unknown) {
@@ -116,7 +120,38 @@ export class UserEvent implements IEngageUserComponent {
           ...input,
           userId,
           walletAddress: wallet,
-          type: 'engage.events.user.signedUp',
+          type: UserEvents.SignedUp,
+          engage_inbound_source: 'sdk',
+        }),
+      });
+    } catch (e: unknown) {
+      logger.error(`There was an error sending request to [ ${this.url} ]`);
+      throw e;
+    }
+  }
+
+  async activity(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+    logger.debug(`Will send request to [ ${this.url} ]`);
+    try {
+      if (!data.userId) {
+        throw new Error('Missing userId');
+      }
+
+      const { wallet, userId, ...input } = data;
+
+      await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+        },
+        body: JSON.stringify({
+          ...input,
+          userId,
+          walletAddress: wallet,
+          type: UserEvents.Activity,
+          engage_inbound_source: 'sdk',
         }),
       });
     } catch (e: unknown) {
