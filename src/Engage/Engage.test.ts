@@ -77,14 +77,14 @@ describe('Engage', () => {
     expect((global as any).fetch).not.toThrow();
   });
 
-  it('should send a login event', async () => {
+  it('should send a signin event', async () => {
     const client = new Engage();
 
     client.initialize({
       apiKey: 'abcd-efgh-1234-5678',
     });
 
-    await client.events.user.login({
+    await client.events.user.signIn({
       userId: '1234',
       wallet: '0x1234',
       foo: 'bar',
@@ -94,14 +94,14 @@ describe('Engage', () => {
     expect((global as any).fetch).not.toThrow();
   });
 
-  it('should send a logout event', async () => {
+  it('should send a signout event', async () => {
     const client = new Engage();
 
     client.initialize({
       apiKey: 'abcd-efgh-1234-5678',
     });
 
-    await client.events.user.logout({
+    await client.events.user.signOut({
       userId: '1234',
       wallet: '0x1234',
       foo: 'bar',

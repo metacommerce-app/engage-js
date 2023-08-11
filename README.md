@@ -47,7 +47,7 @@ await engage.events.send({
 
 ## User events
 
-### Sending a login event
+### Sending a signin event
 
 ```ts
 import Engage from '@metacommerce-app/engage-js';
@@ -57,14 +57,14 @@ const apiKey = 'abcd-efgh-1234-5678';
 
 engage.initialize({ apiKey });
 
-await engage.events.user.login({
+await engage.events.user.signin({
   userId: '1234', // required
   wallet: '0x1234', // optional
   foo: 'bar',
 });
 ```
 
-### Sending a logout event
+### Sending a signout event
 
 ```ts
 import Engage from '@metacommerce-app/engage-js';
@@ -74,7 +74,7 @@ const apiKey = 'abcd-efgh-1234-5678';
 
 engage.initialize({ apiKey });
 
-await engage.events.user.logout({
+await engage.events.user.signout({
   userId: '1234', // required
   wallet: '0x1234', // optional
   foo: 'bar',

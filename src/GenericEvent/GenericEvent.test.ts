@@ -1,4 +1,4 @@
-import { GenericEvent } from './GenericEvent';
+import { GenericEvent, GenericEvents } from './GenericEvent';
 import { Routes } from '../lib/routes';
 
 (global as any).fetch = jest.fn(() =>
@@ -76,7 +76,7 @@ describe('Generic Event', () => {
           'Content-Type': 'application/json',
           'X-API-KEY': apiKey,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, event_type: payload.type, type: GenericEvents.Activity, engage_inbound_source: 'sdk' }),
       }),
     );
   });

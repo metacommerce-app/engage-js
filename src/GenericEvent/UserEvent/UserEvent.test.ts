@@ -1,5 +1,6 @@
 import { UserEvent } from './UserEvent';
 import { Routes } from '../../lib/routes';
+import { UserEvents } from './types';
 
 (global as any).fetch = jest.fn(() =>
   Promise.resolve({
@@ -50,7 +51,7 @@ describe('User Event', () => {
     expect(obj['url'].pathname).toBe(`/${customUri}`);
   });
 
-  it('Should send the proper login request', async () => {
+  it('Should send the proper signin request', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
     const apiKey = 'abcd-efgh-1234-5678';
@@ -61,7 +62,7 @@ describe('User Event', () => {
       userId: '1234',
     };
 
-    await obj.login(payload);
+    await obj.signIn(payload);
 
     const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
 
@@ -77,13 +78,14 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           ...payload,
-          type: 'engage.events.user.login',
+          type: UserEvents.SignIn,
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
   });
 
-  it('Should send the proper logout request', async () => {
+  it('Should send the proper signout request', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
     const apiKey = 'abcd-efgh-1234-5678';
@@ -91,7 +93,7 @@ describe('User Event', () => {
 
     const payload = { foo: 'bar', userId: '1234' };
 
-    await client.logout(payload);
+    await client.signOut(payload);
 
     const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
 
@@ -107,7 +109,8 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           ...payload,
-          type: 'engage.events.user.logout',
+          type: UserEvents.SignOut,
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
@@ -140,7 +143,8 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           ...payload,
-          type: 'engage.events.user.signingUp',
+          type: UserEvents.SigningUp,
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
@@ -170,7 +174,39 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           ...payload,
-          type: 'engage.events.user.signedUp',
+          type: UserEvents.SignedUp,
+          engage_inbound_source: 'sdk',
+        }),
+      }),
+    );
+  });
+
+  it('Should send the proper activity request', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const client = new UserEvent(baseUrl, apiKey);
+
+    const payload = { foo: 'bar', userId: '1234' };
+
+    await client.activity(payload);
+
+    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+
+    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as any).fetch).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey,
+        },
+        body: JSON.stringify({
+          ...payload,
+          type: UserEvents.Activity,
+          engage_inbound_source: 'sdk',
         }),
       }),
     );
@@ -193,13 +229,13 @@ describe('User Event', () => {
     });
 
     const objCall = async () => {
-      await obj.login(payload);
+      await obj.signIn(payload);
     };
 
-    expect(objCall).rejects.toThrow(errorMessage);
+    await expect(objCall).rejects.toThrow(errorMessage);
   });
 
-  it('Should throw if missing userId in login', async () => {
+  it('Should throw if missing userId in signin', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
     const apiKey = 'abcd-efgh-1234-5678';
@@ -211,13 +247,13 @@ describe('User Event', () => {
     };
 
     const objCall = async () => {
-      await obj.login(payload as any); // evil dev
+      await obj.signIn(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing userId');
+    await expect(objCall).rejects.toThrow('Missing userId');
   });
 
-  it('Should throw if missing userId in logout', async () => {
+  it('Should throw if missing userId in activity', async () => {
     const host = 'localhost.localdomain';
     const baseUrl = `https://${host}`;
     const apiKey = 'abcd-efgh-1234-5678';
@@ -229,10 +265,28 @@ describe('User Event', () => {
     };
 
     const objCall = async () => {
-      await obj.logout(payload as any); // evil dev
+      await obj.activity(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing userId');
+    await expect(objCall).rejects.toThrow('Missing userId');
+  });
+
+  it('Should throw if missing userId in signout', async () => {
+    const host = 'localhost.localdomain';
+    const baseUrl = `https://${host}`;
+    const apiKey = 'abcd-efgh-1234-5678';
+    const obj = new UserEvent(baseUrl, apiKey);
+
+    const payload = {
+      NOT_userId: '1234',
+      fail: 'true',
+    };
+
+    const objCall = async () => {
+      await obj.signOut(payload as any); // evil dev
+    };
+
+    await expect(objCall).rejects.toThrow('Missing userId');
   });
 
   it('Should not throw if missing userId in signingUp', async () => {
@@ -248,7 +302,7 @@ describe('User Event', () => {
 
     await obj.signingUp(payload as any); // evil dev
 
-    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    await expect((global as any).fetch).toHaveBeenCalledTimes(1);
   });
 
   it('Should throw if missing userId in signedUp', async () => {
@@ -266,7 +320,7 @@ describe('User Event', () => {
       await obj.signedUp(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing userId');
+    await expect(objCall).rejects.toThrow('Missing userId');
   });
 
   it('Should throw if missing userId in signedUp', async () => {
@@ -284,6 +338,6 @@ describe('User Event', () => {
       await obj.signedUp(payload as any); // evil dev
     };
 
-    expect(objCall).rejects.toThrow('Missing userId');
+    await expect(objCall).rejects.toThrow('Missing userId');
   });
 });
