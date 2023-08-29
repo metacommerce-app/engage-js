@@ -4,7 +4,7 @@
             "es2019",
             "dom"
         ],
-        "module": "ESNext",
+        "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "outDir": "./lib/esm",
         "declarationDir": "./lib/esm/types",
