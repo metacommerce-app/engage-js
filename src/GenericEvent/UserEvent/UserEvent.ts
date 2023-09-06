@@ -1,5 +1,5 @@
-import { logger } from '../../lib/logging';
-import { Routes } from '../../lib/routes';
+import { logger } from '../../lib/logging/index.js';
+import { Routes } from '../../lib/routes/index.js';
 import { IEngageUserComponent } from './IEngageUserComponent';
 import { UserEvents } from './types';
 

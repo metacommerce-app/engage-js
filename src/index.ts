@@ -1,3 +1,3 @@
-import { Engage } from './Engage';
+import { Engage } from './Engage/index.js';
 
 export default Engage;

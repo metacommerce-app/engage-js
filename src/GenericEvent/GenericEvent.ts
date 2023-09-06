@@ -1,6 +1,6 @@
-import { IEngageSubComponent } from '../Engage';
-import { Routes } from '../lib/routes';
-import { logger } from '../lib/logging';
+import { IEngageSubComponent } from '../Engage/index.js';
+import { Routes } from '../lib/routes/index.js';
+import { logger } from '../lib/logging/index.js';
 import { UserEvent } from './UserEvent/UserEvent';
 import { WalletEvent } from './WalletEvent/WalletEvent';
 import { IEngageWalletComponent } from './WalletEvent/IEngageWalletComponent';
