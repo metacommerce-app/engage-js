@@ -1,35 +1,11 @@
 {
-    "compilerOptions": {
-        "lib": [
-            "es2019",
-            "dom"
-        ],
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "outDir": "./lib/esm",
-        "declarationDir": "./lib/esm/types",
-        "target": "ES2019",
-        "strict": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-        "checkJs": true,
-        "allowJs": true,
-        "declaration": true,
-        "declarationMap": true,
-        "allowSyntheticDefaultImports": true,
-        "resolveJsonModule": true,
-        "baseUrl": ".",
-        "inlineSourceMap": true
-    },
-    "files": [
-        "./src/index.ts"
-    ],
-    "include": [
-        "./src/**/*.ts"
-    ],
-    "exclude": [
-        "./src/**/*.test.ts",
-        "node_modules"
-    ]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "outDir": "./lib/esm",
+    "declarationDir": "./lib/esm/types",
+    "target": "ES2019"
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./src/**/*.test.ts", "node_modules"]
 }
