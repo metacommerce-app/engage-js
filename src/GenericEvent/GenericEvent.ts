@@ -20,7 +20,7 @@ export class GenericEvent implements IEngageSubComponent {
 
   constructor(host: string, apiKey: string, uri?: string) {
     this.apiKey = apiKey;
-    this.uri = uri ?? Routes.ACTIVITY_V1;
+    this.uri = uri ?? Routes.PRIVATE_ACTIVITY_V1;
     this.url = new URL(`${host}/${this.uri}`);
 
     this.user = new UserEvent(host, apiKey, uri);

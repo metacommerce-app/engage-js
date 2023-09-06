@@ -1,3 +1,4 @@
 import { Engage } from './Engage';
+import { EngageWeb } from './EngageWeb';
 
-export default Engage;
+export { Engage, EngageWeb };
