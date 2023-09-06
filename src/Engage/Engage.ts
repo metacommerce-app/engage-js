@@ -1,7 +1,7 @@
-import { logger } from '../lib/logging/index.js';
-import { MissingApiKey } from '../lib/errors/index.js';
+import { logger } from '../lib/logging';
+import { MissingApiKey } from '../lib/errors';
 import { IEngageSubComponent } from './EngageSubComponent';
-import { GenericEvent } from '../GenericEvent/index.js';
+import { GenericEvent } from '../GenericEvent';
 
 export class Engage {
   private apiKey?: string;

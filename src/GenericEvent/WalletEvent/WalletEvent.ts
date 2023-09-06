@@ -1,5 +1,5 @@
-import { logger } from '../../lib/logging/index.js';
-import { Routes } from '../../lib/routes/index.js';
+import { logger } from '../../lib/logging';
+import { Routes } from '../../lib/routes';
 import { IEngageWalletComponent } from './IEngageWalletComponent';
 import { WalletEvents } from './types';
 
