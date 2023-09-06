@@ -24,12 +24,12 @@ describe('User Event', () => {
     expect(obj['apiKey']).toBe(apiKey);
 
     expect(obj['uri']).toBeDefined();
-    expect(obj['uri']).toBe(Routes.ACTIVITY_V1);
+    expect(obj['uri']).toBe(Routes.PRIVATE_ACTIVITY_V1);
 
     expect(obj['url']).toBeDefined();
     expect(obj['url']).toBeInstanceOf(URL);
     expect(obj['url'].host).toBe(host);
-    expect(obj['url'].pathname).toBe(`/${Routes.ACTIVITY_V1}`);
+    expect(obj['url'].pathname).toBe(`/${Routes.PRIVATE_ACTIVITY_V1}`);
   });
 
   it('Should initialize the API key with the custom URI', () => {
@@ -64,7 +64,7 @@ describe('User Event', () => {
 
     await obj.signIn(payload);
 
-    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+    const url = new URL(`${baseUrl}/${Routes.PRIVATE_ACTIVITY_V1}`);
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).toHaveBeenCalledWith(
@@ -95,7 +95,7 @@ describe('User Event', () => {
 
     await client.signOut(payload);
 
-    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+    const url = new URL(`${baseUrl}/${Routes.PRIVATE_ACTIVITY_V1}`);
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).toHaveBeenCalledWith(
@@ -129,7 +129,7 @@ describe('User Event', () => {
 
     await client.signingUp(payload);
 
-    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+    const url = new URL(`${baseUrl}/${Routes.PRIVATE_ACTIVITY_V1}`);
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).toHaveBeenCalledWith(
@@ -160,7 +160,7 @@ describe('User Event', () => {
 
     await client.signedUp(payload);
 
-    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+    const url = new URL(`${baseUrl}/${Routes.PRIVATE_ACTIVITY_V1}`);
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).toHaveBeenCalledWith(
@@ -191,7 +191,7 @@ describe('User Event', () => {
 
     await client.activity(payload);
 
-    const url = new URL(`${baseUrl}/${Routes.ACTIVITY_V1}`);
+    const url = new URL(`${baseUrl}/${Routes.PRIVATE_ACTIVITY_V1}`);
 
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
     expect((global as any).fetch).toHaveBeenCalledWith(
