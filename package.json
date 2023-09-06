@@ -4,7 +4,6 @@
   "description": "Metacommerce Engage Javascript SDK",
   "types": "./lib/cjs/types/index.d.ts",
   "main": "./lib/cjs/index.js",
-  "type": "module",
   "files": [
     "lib/**/*"
   ],
