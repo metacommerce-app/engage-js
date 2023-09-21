@@ -18,7 +18,8 @@ export class Engage {
     logger.debug(`initialize: API Key starts with [ ${this.apiKey?.replace(re, '$1...........')} ]`);
     this.url = options?.url ?? 'https://rest.metacommerce.app';
     logger.debug(`initialize: URL will be [ ${this.url} ]`);
+    const engage_inbound_source = 'public-api';
 
-    this.events = new GenericEvent(this.url, this.apiKey);
+    this.events = new GenericEvent(this.url, this.apiKey, undefined, engage_inbound_source);
   }
 }

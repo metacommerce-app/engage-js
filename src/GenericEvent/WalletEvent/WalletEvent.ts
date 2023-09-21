@@ -7,11 +7,13 @@ export class WalletEvent implements IEngageWalletComponent {
   private readonly uri: string;
   private readonly url: URL;
   private readonly apiKey: string;
+  private readonly engage_inbound_source: string;
 
-  constructor(host: string, apiKey: string, uri?: string) {
+  constructor(host: string, apiKey: string, uri?: string, engage_inbound_source = 'sdk') {
     this.apiKey = apiKey;
     this.uri = uri ?? Routes.PRIVATE_ACTIVITY_V1;
     this.url = new URL(`${host}/${this.uri}`);
+    this.engage_inbound_source = engage_inbound_source;
   }
 
   async mint(data: { wallet: string; userId?: string; [params: string]: unknown }): Promise<void> {
@@ -35,7 +37,7 @@ export class WalletEvent implements IEngageWalletComponent {
           type: WalletEvents.Mint,
           walletAddress: wallet,
           userId: userId,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -65,7 +67,7 @@ export class WalletEvent implements IEngageWalletComponent {
           type: WalletEvents.Activity,
           walletAddress: wallet,
           userId: userId,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -95,7 +97,7 @@ export class WalletEvent implements IEngageWalletComponent {
           type: WalletEvents.Transaction,
           walletAddress: wallet,
           userId: userId,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -130,7 +132,7 @@ export class WalletEvent implements IEngageWalletComponent {
           walletAddress: fromWallet,
           userId: userId,
           type: WalletEvents.Transfer,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
 
@@ -146,7 +148,7 @@ export class WalletEvent implements IEngageWalletComponent {
           walletAddress: toWallet,
           userId: userId,
           type: WalletEvents.Received,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -184,7 +186,7 @@ export class WalletEvent implements IEngageWalletComponent {
           walletAddress: wallet,
           userId: userId,
           type: WalletEvents.Balance,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
