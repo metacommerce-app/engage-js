@@ -7,11 +7,13 @@ export class UserEvent implements IEngageUserComponent {
   private readonly uri: string;
   private readonly url: URL;
   private readonly apiKey: string;
+  private readonly engage_inbound_source: string;
 
-  constructor(host: string, apiKey: string, uri?: string) {
+  constructor(host: string, apiKey: string, uri?: string, engage_inbound_source = 'sdk') {
     this.apiKey = apiKey;
     this.uri = uri ?? Routes.PRIVATE_ACTIVITY_V1;
     this.url = new URL(`${host}/${this.uri}`);
+    this.engage_inbound_source = engage_inbound_source;
   }
 
   async signIn(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
@@ -35,7 +37,7 @@ export class UserEvent implements IEngageUserComponent {
           userId,
           walletAddress: wallet,
           type: UserEvents.SignIn,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -65,7 +67,7 @@ export class UserEvent implements IEngageUserComponent {
           userId,
           walletAddress: wallet,
           type: UserEvents.SignOut,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -91,7 +93,7 @@ export class UserEvent implements IEngageUserComponent {
           userId,
           walletAddress: wallet,
           type: UserEvents.SigningUp,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -121,7 +123,7 @@ export class UserEvent implements IEngageUserComponent {
           userId,
           walletAddress: wallet,
           type: UserEvents.SignedUp,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {
@@ -151,7 +153,7 @@ export class UserEvent implements IEngageUserComponent {
           userId,
           walletAddress: wallet,
           type: UserEvents.Activity,
-          engage_inbound_source: 'sdk',
+          engage_inbound_source: this.engage_inbound_source,
         }),
       });
     } catch (e: unknown) {

@@ -2,7 +2,8 @@ import { logger } from '../lib/logging';
 import { MissingApiKey } from '../lib/errors';
 import { IEngageSubComponent } from './EngageSubComponent';
 import { GenericEvent } from '../GenericEvent';
-import { Routes } from '../lib/routes';
+
+const PUBLIC_ACTIVITY_V1 = 'activity/v1';
 
 export class EngageWeb {
   private apiKey?: string;
@@ -19,7 +20,8 @@ export class EngageWeb {
     logger.debug(`initialize: API Key starts with [ ${this.apiKey?.replace(re, '$1...........')} ]`);
     this.url = options?.url ?? 'https://rest.metacommerce.app';
     logger.debug(`initialize: URL will be [ ${this.url} ]`);
+    const engage_inbound_source = 'sdk';
 
-    this.events = new GenericEvent(this.url, this.apiKey, Routes.PUBLIC_ACTIVITY_V1);
+    this.events = new GenericEvent(this.url, this.apiKey, PUBLIC_ACTIVITY_V1, engage_inbound_source);
   }
 }
