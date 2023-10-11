@@ -25,8 +25,8 @@ export class GenericEvent implements IEngageSubComponent {
     this.url = new URL(`${host}/${this.uri}`);
     this.engage_inbound_source = engage_inbound_source;
 
-    this.user = new UserEvent(host, apiKey, uri);
-    this.wallet = new WalletEvent(host, apiKey, uri);
+    this.user = new UserEvent(host, apiKey, this.uri);
+    this.wallet = new WalletEvent(host, apiKey, this.uri);
   }
 
   async send(data: { [param: string]: string; type: string }): Promise<void> {

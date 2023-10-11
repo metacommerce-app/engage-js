@@ -2,6 +2,7 @@ import { logger } from '../lib/logging';
 import { MissingApiKey } from '../lib/errors';
 import { IEngageSubComponent } from './EngageSubComponent';
 import { GenericEvent } from '../GenericEvent';
+import { Routes } from '../lib/routes';
 
 export class Engage {
   private apiKey?: string;
@@ -9,7 +10,7 @@ export class Engage {
 
   events!: IEngageSubComponent;
 
-  initialize(options: { apiKey: string; url?: string }): void {
+  initialize(options: { apiKey: string; url?: string; mode?: 'public' | 'private' }): void {
     if (!options.apiKey) {
       throw new MissingApiKey();
     }
@@ -19,7 +20,9 @@ export class Engage {
     this.url = options?.url ?? 'https://rest.metacommerce.app';
     logger.debug(`initialize: URL will be [ ${this.url} ]`);
     const engage_inbound_source = 'public-api';
+    const defautlMode = options?.mode ?? 'public';
+    const uri = defautlMode === 'public' ? Routes.PUBLIC_ACTIVITY_V1 : Routes.PRIVATE_ACTIVITY_V1;
 
-    this.events = new GenericEvent(this.url, this.apiKey, undefined, engage_inbound_source);
+    this.events = new GenericEvent(this.url, this.apiKey, uri, engage_inbound_source);
   }
 }
