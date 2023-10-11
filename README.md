@@ -44,6 +44,19 @@ const apiKey = 'abcd-efgh-1234-5678';
 engageWebSdk.initialize({ apiKey });
 ```
 
+### Public and Private modes
+
+By default, the sdk is configured to operate with the public sdk, You can change this mode by passing the options: `mode: 'private'`, like this:
+```ts
+import { EngageWeb } from '@metacommerce-app/engage-js';
+
+const engageWebSdk = new EngageWeb();
+const apiKey = 'abcd-efgh-1234-5678';
+
+engageWebSdk.initialize({ apiKey, mode: 'private' });
+```
+
+
 ## Custom events
 
 ### Sending a custom event
