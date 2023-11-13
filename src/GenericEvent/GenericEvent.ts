@@ -21,7 +21,7 @@ export class GenericEvent implements IEngageSubComponent {
 
   constructor(host: string, apiKey: string, uri?: string, engage_inbound_source = 'sdk') {
     this.apiKey = apiKey;
-    this.uri = uri ?? Routes.PRIVATE_ACTIVITY_V1;
+    this.uri = uri ?? Routes.PUBLIC_ACTIVITY_V1;
     this.url = new URL(`${host}/${this.uri}`);
     this.engage_inbound_source = engage_inbound_source;
 

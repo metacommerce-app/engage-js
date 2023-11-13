@@ -1,76 +1,42 @@
-# engage-js
+# Engage-js
 
-Javascript SDK for the Engage platform. More to come.
+Engage-js is a powerful JavaScript SDK for the Engage platform. This document will guide you through the process of integrating it into your frontend application.
 
-## Install the SDK
+## Installation
 
+You can install the SDK using npm:
+
+```bash
+npm install @metacommerce-app/engage-js
 ```
-yarn add @metacommerce-app/engage
-```
 
-or if using npm
+or yarn:
 
-```
-npm install @metacommerce-app/engage
+```bash
+yarn add @metacommerce-app/engage-js
 ```
 
 ## Getting started
 
-Engage-js has two SDKs, one public (EngageWeb) and one private (Engage). Both SDKs are initialized the same way, but the private SDK requires a Private API key and the public SDK requires a Public API key. You can get both keys from the Engage platform. The public SDK incorporates extra security measures as it is meant to be used in a frontend environment.
+Engage-js provides a public SDK, which is designed to be used in a frontend environment. It requires a Public API key, which you can obtain from the [Engage platform](https://engage.metacommerce.app/):
 
-### Initialize the Private SDK
+### Initializing the SDK
 
-The Private SDK is used to send events to the Engage platform. It requires a Private API key to be initialized. This SDK is meant to be used in a backend environment.
+Once you have the Public API key, you can initialize the SDK:
 
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engageSdk = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engageSdk.initialize({ apiKey });
-```
-
-### Initialize the Public SDK
-
-The Public SDK is used to retrieve data from the Engage platform. It requires a Public API key to be initialized. This SDK is meant to be used in a frontend environment.
-
-```ts
-import { EngageWeb } from '@metacommerce-app/engage-js';
-
-const engageWebSdk = new EngageWeb();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engageWebSdk.initialize({ apiKey });
-```
-
-### Public and Private modes
-
-By default, the sdk is configured to operate with the public sdk, You can change this mode by passing the options: `mode: 'private'`, like this:
-```ts
-import { EngageWeb } from '@metacommerce-app/engage-js';
-
-const engageWebSdk = new EngageWeb();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engageWebSdk.initialize({ apiKey, mode: 'private' });
-```
-
-
-## Custom events
-
-### Sending a custom event
-
-Note: works with both public and private SDKs
-
-```ts
+```TypeScript
 import { Engage } from '@metacommerce-app/engage-js';
 
 const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
 
-engage.initialize({apiKey})
+engage.initialize({ apiKey: "your_public_api_key" });
+```
 
+### Tracking custom events
+
+You can track events using the `track` method. If you don't specify the `type` property, the SDK will throw an error.
+
+```TypeScript
 await engage.events.send({
     type: "MyCoolEvent", // required
     foo: "bar"
@@ -78,141 +44,8 @@ await engage.events.send({
 })
 ```
 
-## User events
+## More events
 
-### Sending a signin event
+To make your dev life easier, we have created a set of predefined events that you can use to track user behavior.
 
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.user.signin({
-  userId: '1234', // required
-  wallet: '0x1234', // optional
-  foo: 'bar',
-});
-```
-
-### Sending a signout event
-
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.user.signout({
-  userId: '1234', // required
-  wallet: '0x1234', // optional
-  foo: 'bar',
-});
-```
-
-### Sending a signingUp event
-
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.user.signingUp({
-  userId: '1234', // optional
-  wallet: '0x1234', // optional
-  foo: 'bar',
-});
-```
-
-### Sending a signedUp event
-
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.user.signedUp({
-  userId: '1234', // required
-  wallet: '0x1234', // optional
-  foo: 'bar',
-});
-```
-
-## Wallet events
-
-### Sending a mint event
-
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.wallet.mint({
-  wallet: '0x1234', // required
-  userId: '1234', // optional
-  foo: 'bar',
-});
-```
-
-### Sending a transfer event
-
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.wallet.transfer({
-  fromWallet: '0x1234', // required
-  toWallet: '0x5678', // required
-  userId: '1234', // optional
-  foo: 'bar',
-});
-```
-
-### Sending a balance event
-
-Note: works with both public and private SDKs
-
-```ts
-import { Engage } from '@metacommerce-app/engage-js';
-
-const engage = new Engage();
-const apiKey = 'abcd-efgh-1234-5678';
-
-engage.initialize({ apiKey });
-
-await engage.events.wallet.balance({
-  wallet: '0x1234', // required
-  balance: BigInt(100), // required
-  userId: '1234', // optional
-  foo: 'bar',
-});
-```
+Visit our [documentation page](https://engage.metacommerce.app/docs) to learn more about the events that are available.

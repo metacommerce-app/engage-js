@@ -10,18 +10,20 @@ export class Engage {
 
   events!: IEngageSubComponent;
 
-  initialize(options: { apiKey: string; url?: string; mode?: 'public' | 'private' }): void {
+  initialize(options: { apiKey: string; url?: string }): void {
     if (!options.apiKey) {
       throw new MissingApiKey();
     }
     this.apiKey = options.apiKey;
+    this.url = options?.url ?? 'https://rest.metacommerce.app';
+
+    const engage_inbound_source = 'public-api';
+    const defautlMode = 'public'; // options?.mode ?? 'public'; --> FIXME: will be available soon fellow devs
+    const uri = defautlMode === 'public' ? Routes.PUBLIC_ACTIVITY_V1 : Routes.PRIVATE_ACTIVITY_V1;
+
     const re = /(\w{3}).*/;
     logger.debug(`initialize: API Key starts with [ ${this.apiKey?.replace(re, '$1...........')} ]`);
-    this.url = options?.url ?? 'https://rest.metacommerce.app';
     logger.debug(`initialize: URL will be [ ${this.url} ]`);
-    const engage_inbound_source = 'public-api';
-    const defautlMode = options?.mode ?? 'public';
-    const uri = defautlMode === 'public' ? Routes.PUBLIC_ACTIVITY_V1 : Routes.PRIVATE_ACTIVITY_V1;
 
     this.events = new GenericEvent(this.url, this.apiKey, uri, engage_inbound_source);
   }
