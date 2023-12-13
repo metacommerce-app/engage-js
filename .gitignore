@@ -117,3 +117,4 @@ lib
 # direnv files
 .env-*
 .env
+.npmrc

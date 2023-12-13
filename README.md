@@ -48,4 +48,4 @@ await engage.events.send({
 
 To make your dev life easier, we have created a set of predefined events that you can use to track user behavior.
 
-Visit our [documentation page](https://engage.metacommerce.app/docs) to learn more about the events that are available.
+Visit our [documentation page](https://sdk-documentation.metacommerce.app/) to learn more about the events that are available.
