@@ -29,9 +29,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPMJS_METACOMMERCE_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_METACOMMERCE_TOKEN }}
         run: |
-          if [ -z "${NPM_TOKEN}" ]; then
-            echo "NPM_TOKEN is empty."
-            exit 255
-          fi
-          npx semantic-release --debug
+          npx semantic-release
