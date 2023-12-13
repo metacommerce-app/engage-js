@@ -25,7 +25,6 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/metacommerce-app/engage-js.git"
