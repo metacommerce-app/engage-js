@@ -19,7 +19,7 @@ export class GenericEvent implements IEngageSubComponent {
   user!: IEngageUserComponent;
   wallet!: IEngageWalletComponent;
 
-  constructor(host: string, apiKey: string, uri?: string, engage_inbound_source = 'sdk') {
+  constructor(host: string, apiKey: string, uri?: string, engage_inbound_source = 'engage-destinations') {
     this.apiKey = apiKey;
     this.uri = uri ?? Routes.PUBLIC_ACTIVITY_V1;
     this.url = new URL(`${host}/${this.uri}`);

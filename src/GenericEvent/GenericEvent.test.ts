@@ -76,7 +76,7 @@ describe('Generic Event', () => {
           'Content-Type': 'application/json',
           'X-API-KEY': apiKey,
         },
-        body: JSON.stringify({ ...payload, event_type: payload.type, type: GenericEvents.Activity, engage_inbound_source: 'sdk' }),
+        body: JSON.stringify({ ...payload, event_type: payload.type, type: GenericEvents.Activity, engage_inbound_source: 'engage-destinations' }),
       }),
     );
   });

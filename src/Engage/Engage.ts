@@ -17,7 +17,7 @@ export class Engage {
     this.apiKey = options.apiKey;
     this.url = options?.url ?? 'https://rest.metacommerce.app';
 
-    const engage_inbound_source = 'public-api';
+    const engage_inbound_source = 'engage-destinations';
     const defautlMode = 'public'; // options?.mode ?? 'public'; --> FIXME: will be available soon fellow devs
     const uri = defautlMode === 'public' ? Routes.PUBLIC_ACTIVITY_V1 : Routes.PRIVATE_ACTIVITY_V1;
 
