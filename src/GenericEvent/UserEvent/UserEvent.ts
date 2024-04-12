@@ -16,7 +16,7 @@ export class UserEvent implements IEngageUserComponent {
     this.engage_inbound_source = engage_inbound_source;
   }
 
-  async signIn(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signIn(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -46,7 +46,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async signOut(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signOut(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -102,7 +102,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async signedUp(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signedUp(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -132,7 +132,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async activity(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async activity(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {

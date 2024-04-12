@@ -85,7 +85,7 @@ describe('Engage', () => {
     });
 
     await client.events.user.signIn({
-      user_id: '1234',
+      userId: '1234',
       wallet: '0x1234',
       foo: 'bar',
     });
@@ -102,7 +102,7 @@ describe('Engage', () => {
     });
 
     await client.events.user.signOut({
-      user_id: '1234',
+      userId: '1234',
       wallet: '0x1234',
       foo: 'bar',
     });
@@ -136,7 +136,7 @@ describe('Engage', () => {
     });
 
     await client.events.user.signedUp({
-      user_id: '1234',
+      userId: '1234',
       wallet: '0x1234',
       foo: 'bar',
     });
