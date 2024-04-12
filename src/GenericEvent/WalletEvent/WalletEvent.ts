@@ -35,8 +35,8 @@ export class WalletEvent implements IEngageWalletComponent {
         body: JSON.stringify({
           ...input,
           type: WalletEvents.Mint,
-          walletAddress: wallet,
-          userId: userId,
+          wallet_address: wallet,
+          user_id: userId,
           engage_inbound_source: this.engage_inbound_source,
         }),
       });
@@ -65,8 +65,8 @@ export class WalletEvent implements IEngageWalletComponent {
         body: JSON.stringify({
           ...input,
           type: WalletEvents.Activity,
-          walletAddress: wallet,
-          userId: userId,
+          wallet_address: wallet,
+          user_id: userId,
           engage_inbound_source: this.engage_inbound_source,
         }),
       });
@@ -95,8 +95,8 @@ export class WalletEvent implements IEngageWalletComponent {
         body: JSON.stringify({
           ...input,
           type: WalletEvents.Transaction,
-          walletAddress: wallet,
-          userId: userId,
+          wallet_address: wallet,
+          user_id: userId,
           engage_inbound_source: this.engage_inbound_source,
         }),
       });
@@ -129,8 +129,8 @@ export class WalletEvent implements IEngageWalletComponent {
         },
         body: JSON.stringify({
           ...input,
-          walletAddress: fromWallet,
-          userId: userId,
+          wallet_address: fromWallet,
+          user_id: userId,
           type: WalletEvents.Transfer,
           engage_inbound_source: this.engage_inbound_source,
         }),
@@ -145,8 +145,8 @@ export class WalletEvent implements IEngageWalletComponent {
         },
         body: JSON.stringify({
           ...input,
-          walletAddress: toWallet,
-          userId: userId,
+          wallet_address: toWallet,
+          user_id: userId,
           type: WalletEvents.Received,
           engage_inbound_source: this.engage_inbound_source,
         }),
@@ -183,8 +183,8 @@ export class WalletEvent implements IEngageWalletComponent {
         body: JSON.stringify({
           ...input,
           balance: balance.toString(),
-          walletAddress: wallet,
-          userId: userId,
+          wallet_address: wallet,
+          user_id: userId,
           type: WalletEvents.Balance,
           engage_inbound_source: this.engage_inbound_source,
         }),

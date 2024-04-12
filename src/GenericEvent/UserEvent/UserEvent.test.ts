@@ -61,6 +61,7 @@ describe('User Event', () => {
       foo: 'bar',
       userId: '1234',
     };
+    const expectedPayload = { foo: 'bar', user_id: '1234' };
 
     await obj.signIn(payload);
 
@@ -77,7 +78,7 @@ describe('User Event', () => {
           'X-API-KEY': apiKey,
         },
         body: JSON.stringify({
-          ...payload,
+          ...expectedPayload,
           type: UserEvents.SignIn,
           engage_inbound_source: 'sdk',
         }),
@@ -92,6 +93,7 @@ describe('User Event', () => {
     const client = new UserEvent(baseUrl, apiKey);
 
     const payload = { foo: 'bar', userId: '1234' };
+    const expectedPayload = { foo: 'bar', user_id: '1234' };
 
     await client.signOut(payload);
 
@@ -108,7 +110,7 @@ describe('User Event', () => {
           'X-API-KEY': apiKey,
         },
         body: JSON.stringify({
-          ...payload,
+          ...expectedPayload,
           type: UserEvents.SignOut,
           engage_inbound_source: 'sdk',
         }),
@@ -126,6 +128,7 @@ describe('User Event', () => {
       foo: 'bar',
       userId: '1234', // optional
     };
+    const expectedPayload = { foo: 'bar', user_id: '1234' };
 
     await client.signingUp(payload);
 
@@ -142,7 +145,7 @@ describe('User Event', () => {
           'X-API-KEY': apiKey,
         },
         body: JSON.stringify({
-          ...payload,
+          ...expectedPayload,
           type: UserEvents.SigningUp,
           engage_inbound_source: 'sdk',
         }),
@@ -157,6 +160,7 @@ describe('User Event', () => {
     const client = new UserEvent(baseUrl, apiKey);
 
     const payload = { foo: 'bar', userId: '1234' };
+    const expectedPayload = { foo: 'bar', user_id: '1234' };
 
     await client.signedUp(payload);
 
@@ -173,7 +177,7 @@ describe('User Event', () => {
           'X-API-KEY': apiKey,
         },
         body: JSON.stringify({
-          ...payload,
+          ...expectedPayload,
           type: UserEvents.SignedUp,
           engage_inbound_source: 'sdk',
         }),
@@ -188,6 +192,7 @@ describe('User Event', () => {
     const client = new UserEvent(baseUrl, apiKey);
 
     const payload = { foo: 'bar', userId: '1234' };
+    const expectedPayload = { foo: 'bar', user_id: '1234' };
 
     await client.activity(payload);
 
@@ -204,7 +209,7 @@ describe('User Event', () => {
           'X-API-KEY': apiKey,
         },
         body: JSON.stringify({
-          ...payload,
+          ...expectedPayload,
           type: UserEvents.Activity,
           engage_inbound_source: 'sdk',
         }),
