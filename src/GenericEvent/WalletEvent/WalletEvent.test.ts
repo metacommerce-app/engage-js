@@ -77,7 +77,7 @@ describe('User Event', () => {
         body: JSON.stringify({
           foo: 'bar',
           type: WalletEvents.Mint,
-          walletAddress: '0x1234',
+          wallet_address: '0x1234',
           engage_inbound_source: 'sdk',
         }),
       }),
@@ -110,7 +110,7 @@ describe('User Event', () => {
         body: JSON.stringify({
           foo: 'bar',
           type: WalletEvents.Activity,
-          walletAddress: '0x1234',
+          wallet_address: '0x1234',
           engage_inbound_source: 'sdk',
         }),
       }),
@@ -161,7 +161,7 @@ describe('User Event', () => {
         body: JSON.stringify({
           foo: 'bar',
           type: WalletEvents.Transaction,
-          walletAddress: '0x1234',
+          wallet_address: '0x1234',
           engage_inbound_source: 'sdk',
         }),
       }),
@@ -230,7 +230,7 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           foo: 'bar',
-          walletAddress: '0x1234', // from
+          wallet_address: '0x1234', // from
           type: WalletEvents.Transfer,
           engage_inbound_source: 'sdk',
         }),
@@ -247,7 +247,7 @@ describe('User Event', () => {
         },
         body: JSON.stringify({
           foo: 'bar',
-          walletAddress: '0x5678', // to
+          wallet_address: '0x5678', // to
           type: WalletEvents.Received,
           engage_inbound_source: 'sdk',
         }),
@@ -373,7 +373,7 @@ it('Should send the proper balance request', async () => {
       body: JSON.stringify({
         foo: 'bar',
         balance: BigInt(100).toString(),
-        walletAddress: '0x1234',
+        wallet_address: '0x1234',
         type: WalletEvents.Balance,
         engage_inbound_source: 'sdk',
       }),

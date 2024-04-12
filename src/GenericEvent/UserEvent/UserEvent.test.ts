@@ -59,7 +59,7 @@ describe('User Event', () => {
 
     const payload = {
       foo: 'bar',
-      userId: '1234',
+      user_id: '1234',
     };
 
     await obj.signIn(payload);
@@ -91,7 +91,7 @@ describe('User Event', () => {
     const apiKey = 'abcd-efgh-1234-5678';
     const client = new UserEvent(baseUrl, apiKey);
 
-    const payload = { foo: 'bar', userId: '1234' };
+    const payload = { foo: 'bar', user_id: '1234' };
 
     await client.signOut(payload);
 
@@ -124,7 +124,7 @@ describe('User Event', () => {
 
     const payload = {
       foo: 'bar',
-      userId: '1234', // optional
+      user_id: '1234', // optional
     };
 
     await client.signingUp(payload);
@@ -156,7 +156,7 @@ describe('User Event', () => {
     const apiKey = 'abcd-efgh-1234-5678';
     const client = new UserEvent(baseUrl, apiKey);
 
-    const payload = { foo: 'bar', userId: '1234' };
+    const payload = { foo: 'bar', user_id: '1234' };
 
     await client.signedUp(payload);
 
@@ -187,7 +187,7 @@ describe('User Event', () => {
     const apiKey = 'abcd-efgh-1234-5678';
     const client = new UserEvent(baseUrl, apiKey);
 
-    const payload = { foo: 'bar', userId: '1234' };
+    const payload = { foo: 'bar', user_id: '1234' };
 
     await client.activity(payload);
 
@@ -219,7 +219,7 @@ describe('User Event', () => {
     const obj = new UserEvent(baseUrl, apiKey);
 
     const payload = {
-      userId: '1234',
+      user_id: '1234',
       fail: 'true',
     };
 

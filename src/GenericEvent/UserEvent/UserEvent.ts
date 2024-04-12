@@ -16,7 +16,7 @@ export class UserEvent implements IEngageUserComponent {
     this.engage_inbound_source = engage_inbound_source;
   }
 
-  async signIn(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signIn(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -34,8 +34,8 @@ export class UserEvent implements IEngageUserComponent {
         },
         body: JSON.stringify({
           ...input,
-          userId,
-          walletAddress: wallet,
+          user_id: userId,
+          wallet_address: wallet,
           type: UserEvents.SignIn,
           engage_inbound_source: this.engage_inbound_source,
         }),
@@ -46,7 +46,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async signOut(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signOut(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -64,8 +64,8 @@ export class UserEvent implements IEngageUserComponent {
         },
         body: JSON.stringify({
           ...input,
-          userId,
-          walletAddress: wallet,
+          user_id: userId,
+          wallet_address: wallet,
           type: UserEvents.SignOut,
           engage_inbound_source: this.engage_inbound_source,
         }),
@@ -90,8 +90,8 @@ export class UserEvent implements IEngageUserComponent {
         },
         body: JSON.stringify({
           ...input,
-          userId,
-          walletAddress: wallet,
+          user_id: userId,
+          wallet_address: wallet,
           type: UserEvents.SigningUp,
           engage_inbound_source: this.engage_inbound_source,
         }),
@@ -102,7 +102,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async signedUp(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async signedUp(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -120,8 +120,8 @@ export class UserEvent implements IEngageUserComponent {
         },
         body: JSON.stringify({
           ...input,
-          userId,
-          walletAddress: wallet,
+          user_id: userId,
+          wallet_address: wallet,
           type: UserEvents.SignedUp,
           engage_inbound_source: this.engage_inbound_source,
         }),
@@ -132,7 +132,7 @@ export class UserEvent implements IEngageUserComponent {
     }
   }
 
-  async activity(data: { userId: string; wallet?: string; [params: string]: unknown }): Promise<void> {
+  async activity(data: { user_id: string; wallet?: string; [params: string]: unknown }): Promise<void> {
     logger.debug(`Will send request to [ ${this.url} ]`);
     try {
       if (!data.userId) {
@@ -150,8 +150,8 @@ export class UserEvent implements IEngageUserComponent {
         },
         body: JSON.stringify({
           ...input,
-          userId,
-          walletAddress: wallet,
+          user_id: userId,
+          wallet_address: wallet,
           type: UserEvents.Activity,
           engage_inbound_source: this.engage_inbound_source,
         }),
