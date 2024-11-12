@@ -41,7 +41,7 @@
     "@commitlint/types": "19.5.0",
     "@types/jest": "29.5.14",
     "@types/node": "20.17.6",
-    "@types/node-fetch": "2.6.11",
+    "@types/node-fetch": "2.6.12",
     "@types/prettier": "3.0.0",
     "@types/source-map-support": "0.5.10",
     "@typescript-eslint/eslint-plugin": "7.18.0",
